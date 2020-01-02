@@ -64,7 +64,7 @@ function toggle_main_dialog(player)
         player.opened = main_dialog.visible and main_dialog or nil
 
         -- Handle the pause_on_open_interface option
-        if get_settings(player).pause_on_interface and not game.is_multiplayer() and 
+        if get_settings(player).pause_on_interface and not game.is_multiplayer() and
           player.controller_type ~= defines.controllers.editor then
             game.tick_paused = main_dialog.visible  -- only pause when the main dialog is open
         end
@@ -107,11 +107,11 @@ end
 -- Creates the dialog if it doesn't exist; Recreates it if needs to
 function refresh_main_dialog(player, full_refresh)
     local main_dialog = player.gui.screen["fp_frame_main_dialog"]
-    
+
     if (main_dialog == nil and not full_refresh) or (main_dialog ~= nil and full_refresh) then
         if main_dialog ~= nil then main_dialog.clear()
-        else main_dialog = player.gui.screen.add{type="frame", name="fp_frame_main_dialog", direction="vertical"} end
-        
+        else main_dialog = player.gui.screen.add{type="frame", name="fp_frame_main_dialog", style='dialog_frame', direction="vertical"} end
+
         local dimensions = ui_util.recalculate_main_dialog_dimensions(player)
         ui_util.properly_center_frame(player, main_dialog, dimensions.width, dimensions.height)
         main_dialog.style.minimal_width = dimensions.width
@@ -134,7 +134,7 @@ function refresh_main_dialog(player, full_refresh)
         refresh_actionbar(player)
         refresh_subfactory_bar(player, true)
     end
-    
+
     ui_util.message.refresh(player)
     return main_dialog
 end
@@ -142,40 +142,34 @@ end
 -- Creates the titlebar including name and exit-button
 function add_titlebar_to(main_dialog)
     local titlebar = main_dialog.add{type="flow", name="flow_titlebar", direction="horizontal"}
-    
+    titlebar.style.vertical_align = 'center'
+
     -- Title
-    local label_title = titlebar.add{type="label", name="label_titlebar_name", caption=" Factory Planner"}
-    label_title.style.font = "fp-font-bold-26p"
+    local label_title = titlebar.add{type="label", name="label_titlebar_name", style='frame_title', caption=" Factory Planner"}
 
     -- Hint
     local label_hint = titlebar.add{type="label", name="label_titlebar_hint"}
     label_hint.style.font = "fp-font-16p"
     label_hint.style.top_margin = 8
     label_hint.style.left_margin = 14
-
-    -- Spacer
-    local flow_spacer = titlebar.add{type="flow", name="flow_titlebar_spacer", direction="horizontal"}
-    flow_spacer.style.horizontally_stretchable = true
+    label_hint.visible = false -- for now, until we move the hints to the action bar
 
     -- Drag handle
-    local handle = titlebar.add{type="empty-widget", name="empty-widget_titlebar_space", style="draggable_space"}
-    handle.style.height = 34
-    handle.style.width = 180
-    handle.style.top_margin = 4
+    local handle = titlebar.add{type="empty-widget", name="empty-widget_titlebar_space", style="draggable_space_header"}
+    handle.style.horizontally_stretchable = true
+    handle.style.height = 24
+    handle.style.right_margin = 7
     handle.drag_target = main_dialog
 
-    -- Buttonbar
-    local flow_buttonbar = titlebar.add{type="flow", name="flow_titlebar_buttonbar", direction="horizontal"}
-    flow_buttonbar.style.top_margin = 4
+    -- Buttons
+    titlebar.add{type="sprite-button", name="fp_button_titlebar_tutorial", tooltip={"fp.tutorial"},
+      style="close_button", mouse_button_filter={"left"}, sprite="fp_sprite_tutorial", hovered_sprite="fp_sprite_tutorial_black",
+      clicked_sprite="fp_sprite_tutorial_black"}
+    titlebar.add{type="sprite-button", name="fp_button_titlebar_preferences", tooltip={"fp.preferences"},
+      style="close_button", mouse_button_filter={"left"}, sprite="fp_sprite_preferences", hovered_sprite="fp_sprite_preferences_black",
+      clicked_sprite="fp_sprite_preferences_black"}
 
-    flow_buttonbar.add{type="button", name="fp_button_titlebar_tutorial", caption={"fp.tutorial"},
-      style="fp_button_titlebar", mouse_button_filter={"left"}}
-    flow_buttonbar.add{type="button", name="fp_button_titlebar_preferences", caption={"fp.preferences"},
-      style="fp_button_titlebar", mouse_button_filter={"left"}}
-
-    local button_exit = flow_buttonbar.add{type="button", name="fp_button_titlebar_exit", caption="X",
-      style="fp_button_titlebar", mouse_button_filter={"left"}}
-    button_exit.style.font = "fp-font-bold-16p"
-    button_exit.style.width = 34
-    button_exit.style.left_margin = 2
+    local button_exit = titlebar.add{type="sprite-button", name="fp_button_titlebar_exit",
+      style="close_button", mouse_button_filter={"left"}, sprite="utility/close_white", hovered_sprite="utility/close_black",
+      clicked_sprite="utility/close_black"}
 end

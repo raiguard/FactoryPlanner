@@ -27,5 +27,41 @@ data:extend({
         filename = "__factoryplanner__/graphics/purple_circle.png",
         priority = "extra-high-no-scale",
         size = 40
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_tutorial",
+        filename = "__factoryplanner__/graphics/titlebar_buttons.png",
+        position = {0,0},
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_tutorial_black",
+        filename = "__factoryplanner__/graphics/titlebar_buttons.png",
+        position = {0,32},
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_preferences",
+        filename = "__factoryplanner__/graphics/titlebar_buttons.png",
+        position = {48,0},
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_preferences_black",
+        filename = "__factoryplanner__/graphics/titlebar_buttons.png",
+        position = {48,32},
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
     }
 })
