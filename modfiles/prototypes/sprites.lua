@@ -63,5 +63,32 @@ data:extend({
         size = 32,
         mipmap_count = 2,
         flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_action_bar_add",
+        filename = "__factoryplanner__/graphics/action_bar_buttons.png",
+        y = 0,
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_action_bar_edit",
+        filename = "__factoryplanner__/graphics/action_bar_buttons.png",
+        y = 32,
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
+    },
+    {
+        type = "sprite",
+        name = "fp_sprite_action_bar_archive",
+        filename = "__factoryplanner__/graphics/action_bar_buttons.png",
+        y = 64,
+        size = 32,
+        mipmap_count = 2,
+        flags = {"icon"}
     }
 })

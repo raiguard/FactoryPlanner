@@ -272,3 +272,32 @@ data.raw["gui-style"].default["fp_button_existing_product"] = {
 
 --data.raw["gui-style"].default["crafting_queue_slot"].size = 24
 --data.raw["gui-style"].default["slot_button"].size = 24
+
+data.raw["gui-style"].default["fp_green_button"] = {
+    type = "button_style",
+    parent = "button",
+    default_graphical_set = {
+        base = {position = {68, 17}, corner_size = 8},
+        shadow = default_dirt
+    },
+    hovered_graphical_set = {
+        base = {position = {102, 17}, corner_size = 8},
+        shadow = default_dirt,
+        glow = default_glow(green_arrow_button_glow_color, 0.5)
+    },
+    clicked_graphical_set = {
+        base = {position = {119, 17}, corner_size = 8},
+        shadow = default_dirt
+    },
+    disabled_graphical_set = {
+        base = {position = {85, 17}, corner_size = 8},
+        shadow = default_dirt
+    }
+}
+
+data.raw["gui-style"].default["fp_green_icon_button"] = {
+    type = "button_style",
+    parent = "fp_green_button",
+    padding = 2,
+    size = 28
+}

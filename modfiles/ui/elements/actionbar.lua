@@ -1,23 +1,22 @@
 -- Creates the actionbar including the new-, edit- and delete-buttons
 function add_actionbar_to(main_dialog)
-    local actionbar = main_dialog.add{type="flow", name="flow_action_bar", direction="horizontal"}
+    local actionbar = main_dialog.add{type="frame", name="frame_action_bar", style="subheader_frame", direction="horizontal"}
     actionbar.style.bottom_margin = 4
-    actionbar.style.left_margin = 6
 
-    actionbar.add{type="button", name="fp_button_new_subfactory", caption={"fp.new_subfactory"}, 
-      style="fp_button_action", mouse_button_filter={"left"}, tooltip={"fp.action_new_subfactory"}}
-    actionbar.add{type="button", name="fp_button_edit_subfactory", caption={"fp.edit"}, 
-      style="fp_button_action", mouse_button_filter={"left"}, tooltip={"fp.action_edit_subfactory"}}
-    actionbar.add{type="button", name="fp_button_archive_subfactory", caption={"fp.archive"}, 
-      style="fp_button_action", mouse_button_filter={"left"}}
-    actionbar.add{type="button", name="fp_button_delete_subfactory", caption={"fp.delete"}, 
-      style="fp_button_action", mouse_button_filter={"left"}, tooltip={"fp.action_delete_subfactory"}}
+    actionbar.add{type="sprite-button", name="fp_button_new_subfactory", sprite="fp_sprite_action_bar_add",
+      style="fp_green_icon_button", mouse_button_filter={"left"}, tooltip={"fp.action_new_subfactory"}}
+    actionbar.add{type="sprite-button", name="fp_button_edit_subfactory", sprite="fp_sprite_action_bar_edit",
+      style="tool_button", mouse_button_filter={"left"}, tooltip={"fp.action_edit_subfactory"}}
+    actionbar.add{type="sprite-button", name="fp_button_archive_subfactory", sprite="fp_sprite_action_bar_archive",
+      style="tool_button", mouse_button_filter={"left"}}
+    actionbar.add{type="sprite-button", name="fp_button_delete_subfactory", sprite="utility/trash",
+      style="red_icon_button", mouse_button_filter={"left"}, tooltip={"fp.action_delete_subfactory"}}
 
-    local actionbar_spacer = actionbar.add{type="flow", name="flow_actionbar_spacer", direction="horizontal"}
+    local actionbar_spacer = actionbar.add{type="empty-widget", name="flow_actionbar_spacer"}
     actionbar_spacer.style.horizontally_stretchable = true
 
-    local button_toggle_archive = actionbar.add{type="button", name="fp_button_toggle_archive",
-      caption={"fp.open_archive"}, style="fp_button_action", mouse_button_filter={"left"}}  
+    local button_toggle_archive = actionbar.add{type="sprite-button", name="fp_button_toggle_archive",
+      sprite='fp_sprite_action_bar_archive', style="tool_button", mouse_button_filter={"left"}}
 
     refresh_actionbar(game.get_player(main_dialog.player_index))
 end
@@ -26,12 +25,11 @@ end
 -- Disables edit and delete buttons if there exist no subfactories
 function refresh_actionbar(player)
     local ui_state = get_ui_state(player)
-    local actionbar = player.gui.screen["fp_frame_main_dialog"]["flow_action_bar"]
+    local actionbar = player.gui.screen["fp_frame_main_dialog"].fp_background_pane["frame_action_bar"]
     local new_button = actionbar["fp_button_new_subfactory"]
     local delete_button = actionbar["fp_button_delete_subfactory"]
     local archive_button = actionbar["fp_button_archive_subfactory"]
     local toggle_archive_button = actionbar["fp_button_toggle_archive"]
-    toggle_archive_button.style.width = 148  -- set here so it doesn't get lost somehow
 
     local subfactory_exists = (ui_state.context.subfactory ~= nil)
     actionbar["fp_button_edit_subfactory"].enabled = subfactory_exists
@@ -53,29 +51,29 @@ function refresh_actionbar(player)
     end
     toggle_archive_button.tooltip = archive_tooltip
 
-    if ui_state.current_activity == "deleting_subfactory" then
-        delete_button.caption = {"fp.delete_confirm"}
-        delete_button.style.font =  "fp-font-bold-16p"
-        delete_button.style.left_padding = 16
-        ui_util.set_label_color(delete_button, "dark_red")
-    else
-        delete_button.caption = {"fp.delete"}
-        delete_button.style.font =  "fp-font-semibold-16p"
-        delete_button.style.left_padding = 10
-        ui_util.set_label_color(delete_button, "default_button")
-    end
+    -- if ui_state.current_activity == "deleting_subfactory" then
+    --     delete_button.caption = {"fp.delete_confirm"}
+    --     delete_button.style.font =  "fp-font-bold-16p"
+    --     delete_button.style.left_padding = 16
+    --     ui_util.set_label_color(delete_button, "dark_red")
+    -- else
+    --     delete_button.caption = {"fp.delete"}
+    --     delete_button.style.font =  "fp-font-semibold-16p"
+    --     delete_button.style.left_padding = 10
+    --     ui_util.set_label_color(delete_button, "default_button")
+    -- end
 
-    if ui_state.archive_open then
-        new_button.enabled = false
-        archive_button.caption = {"fp.unarchive"}
-        toggle_archive_button.caption = {"fp.close_archive"}
-        toggle_archive_button.style = "fp_button_action_selected"
-    else
-        new_button.enabled = true
-        archive_button.caption = {"fp.archive"}
-        toggle_archive_button.caption = {"fp.open_archive"}
-        toggle_archive_button.style = "fp_button_action"
-    end
+    -- if ui_state.archive_open then
+    --     new_button.enabled = false
+    --     archive_button.caption = {"fp.unarchive"}
+    --     toggle_archive_button.caption = {"fp.close_archive"}
+    --     toggle_archive_button.style = "fp_button_action_selected"
+    -- else
+    --     new_button.enabled = true
+    --     archive_button.caption = {"fp.archive"}
+    --     toggle_archive_button.caption = {"fp.open_archive"}
+    --     toggle_archive_button.style = "fp_button_action"
+    -- end
 end
 
 

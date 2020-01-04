@@ -119,7 +119,13 @@ function refresh_main_dialog(player, full_refresh)
         main_dialog.visible = (not full_refresh) or false  -- hide dialog on a full refresh
 
         add_titlebar_to(main_dialog)
-        add_actionbar_to(main_dialog)
+
+        -- background pane
+        local background_pane = main_dialog.add{type='frame', name='fp_background_pane', style='inside_deep_frame'}
+
+        add_actionbar_to(background_pane)
+
+        -- tabbed pane
         add_subfactory_bar_to(main_dialog)
         add_error_bar_to(main_dialog)
         add_subfactory_pane_to(main_dialog)
@@ -143,6 +149,7 @@ end
 function add_titlebar_to(main_dialog)
     local titlebar = main_dialog.add{type="flow", name="flow_titlebar", direction="horizontal"}
     titlebar.style.vertical_align = 'center'
+    titlebar.style.top_margin = -2
 
     -- Title
     local label_title = titlebar.add{type="label", name="label_titlebar_name", style='frame_title', caption=" Factory Planner"}
